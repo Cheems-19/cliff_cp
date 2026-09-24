@@ -45,7 +45,7 @@ cliff-cp/
 ├── figures/                     # manuscript figures (PNG)
 ├── figures_submission/          # 600 dpi TIFF + vector PDF + MANIFEST (journal-ready)
 ├── requirements.txt             # frozen dependency set
-├── 预注册_分析计划.md            # pre-registered analysis plan (mirrored in SI §S7)
+├── 预注册_分析计划.md            # public OSF preregistration supplement (full plan, mirrored in SI §S7)
 ├── CITATION.cff                 # machine-readable citation metadata
 └── README.md                    # this file
 ```
@@ -169,7 +169,7 @@ If you use this code or data, please cite both the archived software record and 
 ```bibtex
 @software{cliffcp2026,
   title  = {cliff-cp: coverage failure of conformal prediction on activity cliffs},
-  author = {{Authors}},
+  author = {Tao, Shaobo},
   year   = {2026},
   doi    = {10.5281/zenodo.XXXXXXX}
 }
@@ -177,10 +177,11 @@ If you use this code or data, please cite both the archived software record and 
 
 ## Archiving
 
-1. Fill in the author/affiliation fields of `CITATION.cff` and `.zenodo.json`.
-2. Link the GitHub repository to Zenodo, then create a GitHub Release (tag e.g. `v1.0.0`).
-3. Zenodo mints a DOI automatically — paste it back into this README, `CITATION.cff`, and the manuscript's Data/Code availability statements.
+1. Author/affiliation fields of `CITATION.cff` and `.zenodo.json` are filled (single author: Tao, Shaobo). Update both files if co-authors are added later.
+2. Create a public OSF project and upload `预注册_分析计划.md` as the preregistration supplement; link it from the manuscript's Data/Code availability section.
+3. Link the GitHub repository to Zenodo, then create a GitHub Release (tag e.g. `v1.0.0`).
+4. Zenodo mints a DOI automatically — paste it back into this README, `CITATION.cff`, and the manuscript's Data/Code availability statements.
 
 ## Contact
 
-Questions, corrections and replication attempts are welcome — please open an issue, or email **{corresponding@institution.edu}**.
+Questions, corrections and replication attempts are welcome — please open an issue, or email **487455429@qq.com**.

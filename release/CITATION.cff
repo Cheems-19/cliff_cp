@@ -14,21 +14,16 @@ license: MIT
 version: "1.0.0"
 date-released: "2026-09-23"
 
-# ── 待填：把下面每个 {} 换成真实信息 ────────────────────────────────
 authors:
-  - family-names: "{FamilyName1}"
-    given-names: "{GivenName1}"
-    orcid: "https://orcid.org/{0000-0000-0000-0000}"
-    affiliation: "{Institution, City, Postcode, Country}"
-  - family-names: "{FamilyName2}"
-    given-names: "{GivenName2}"
-    affiliation: "{Institution, City, Postcode, Country}"
-# 需要几位作者就继续加 - family-names: ... 条目
+  - family-names: "Tao"
+    given-names: "Shaobo"
+    orcid: "https://orcid.org/0009-0006-0142-8692"
+    affiliation: "Southwest Jiaotong University, Chengdu, 611756, China"
 
 contact:
-  - family-names: "{FamilyName1}"
-    given-names: "{GivenName1}"
-    email: "{corresponding@institution.edu}"
+  - family-names: "Tao"
+    given-names: "Shaobo"
+    email: "487455429@qq.com"
 
 repository-code: "https://github.com/Cheems-19/cliff_cp"
 url: "https://github.com/Cheems-19/cliff_cp"
@@ -47,8 +42,8 @@ references:
   - type: article
     title: "How the coverage guarantee of conformal prediction fails on activity cliffs: mechanism, diagnosis, and a structural blind spot of applicability domains"
     authors:
-      - family-names: "{FamilyName1}"
-        given-names: "{GivenName1}"
+      - family-names: "Tao"
+        given-names: "Shaobo"
     year: 2026
     journal: "{Journal name — to be filled after submission}"
     doi: "{DOI — to be filled after acceptance}"

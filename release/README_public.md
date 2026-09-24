@@ -36,8 +36,11 @@ cliff-cp/
 │   ├── dispersion.py            #   local label-dispersion signals
 │   ├── conformal.py             #   global / Mondrian / cluster / kNN-weighted / adaptive / weighted-shift
 │   ├── stats.py                 #   Wilson intervals, stratified permutation, group coverage
+│   ├── diagnostics.py           #   net_mag: label-free pre-deployment diagnostic (NumPy-only)
 │   └── gnn.py                   #   D-MPNN (chemprop) integration
 ├── scripts/                     # analysis, aggregation and plotting entry points
+├── notebooks/
+│   └── net_mag_demo.ipynb       # runnable 5-minute demo of the net_mag diagnostic
 ├── results_*/                   # aggregated tables (CSV) + dump/ per-molecule records
 ├── figures/                     # manuscript figures (PNG)
 ├── figures_submission/          # 600 dpi TIFF + vector PDF + MANIFEST (journal-ready)
@@ -61,6 +64,26 @@ pip install -r requirements.txt
 ```
 
 `requirements.txt` pins the exact versions used for the published results (numpy, pandas, scikit-learn, scipy, matplotlib, rdkit). The D-MPNN arm additionally needs `torch` and `chemprop` (GPU recommended); those are commented out by default so the CPU-only analyses install cleanly.
+
+## Quickstart: the `net_mag` diagnostic (no data download needed)
+
+```python
+import sys; sys.path.insert(0, "src")
+from cliffcp.diagnostics import net_mag
+
+nm = net_mag(
+    target_signal=signal_test,   # label-free signal for the molecules you care about
+    cal_scores=cal_scores,       # |y - yhat| on your calibration set
+    cal_signal=signal_cal,       # same signal on the calibration set
+    group=cliff_mask,            # bool mask / indices of the subgroup of interest
+    n_bins=3, alpha=0.10,        # manuscript recommends 3 or 5 bins
+)
+# nm < 0  -> this signal is expected to LOWER coverage for `group` (do not condition on it)
+# nm > 0  -> expected benefit;  |nm|*100 < 0.5 -> no practical effect
+```
+
+NumPy-only — no RDKit required, drops into any pipeline. A runnable 5-minute walkthrough
+lives in [`notebooks/net_mag_demo.ipynb`](notebooks/net_mag_demo.ipynb).
 
 ## Data
 

@@ -6,6 +6,10 @@ if PLUGIN_SCRIPTS not in sys.path:
 
 from html_to_docx import convert, ConvertOptions
 
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from docx_academic import apply_academic
+
 html_path = r"C:/Users/Administrator/Desktop/小论文/cliff_cp/figures/论文全文_v1.html"
 out_path = r"C:/Users/Administrator/Desktop/小论文/cliff_cp/共形预测在活性悬崖上的覆盖失效_论文v5.docx"
 base_dir = os.path.dirname(html_path)
@@ -23,6 +27,10 @@ opts = ConvertOptions(
 
 res = convert(html, output_path=None, options=opts)
 print("success:", res.success)
+
+# 学术化后处理：图片安全（防裁切/去 alpha）+ 三线表
+apply_academic(res.docx_path, out_path)
+print("academic post-process done ->", out_path)
 print("docx_path:", res.docx_path)
 print("num_warnings:", len(res.warnings))
 for w in res.warnings[:30]:

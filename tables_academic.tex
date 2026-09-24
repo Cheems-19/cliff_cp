@@ -1,0 +1,239 @@
+%! TEX program = xelatex
+% =============================================================
+%  论文表格的学术化 LaTeX 重排（booktabs 三线表 + siunitx 小数点对齐
+%  + threeparttable 表注）。编译：xelatex tables_academic.tex
+%  依赖宏包：ctex(中文) booktabs siunitx threeparttable tabularx
+%            multirow caption
+%  若 siunitx 版本报错，可删除 \sisetup 中的 detect-weight 一行。
+% =============================================================
+\documentclass[UTF8, 11pt, a4paper]{ctexart}
+
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{geometry}
+
+% siunitx 设置：数值居中对齐；detect-weight 使 S 列内的 \bfseries 生效
+\sisetup{
+  detect-weight = true,
+  table-number-alignment = center,
+  separate-uncertainty = false,
+}
+
+% 信号代号（下划线已转义）
+\newcommand{\sig}[1]{\texttt{#1}}
+
+\captionsetup[table]{skip=4pt, font=small, labelfont=bf}
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+\begin{document}
+
+\listoftables
+\clearpage
+
+% ===================== 表 1：条件化信号概览 =====================
+\begin{table}[htbp]
+  \centering
+  \caption{条件化信号概览。所有信号均可在无查询标签的情况下计算。}
+  \label{tab:signals}
+  \begin{tabularx}{\textwidth}{@{} l X l @{}}
+    \toprule
+    信号 & 含义 & 侧别 \\
+    \midrule
+    \sig{d\_wstd}            & 训练邻居标签的\textbf{加权}标准差 & 数据侧 \\
+    \sig{d\_std}             & 训练邻居标签的标准差 & 数据侧 \\
+    \sig{d\_iqr}             & 训练邻居标签的 IQR & 数据侧 \\
+    \sig{d\_nb}              & 相似度 $\geq$ 0.85 的训练邻居数 & 数据侧（密度） \\
+    \sig{d\_nn\_sim}         & 最近训练邻居的 Tanimoto 相似度 & 数据侧（距离） \\
+    \sig{d\_pair} / \sig{d\_pair\_gap} & 邻域内最大标签差（同一量的两种实现） & 数据侧 \\
+    \sig{rf\_std}            & 模型侧不确定性：RF 树间标准差 / GBR 多种子集成标准差 / D-MPNN 集成标准差 & 模型侧 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ===================== 表 2：关键数字口径速查 =====================
+\begin{table}[htbp]
+  \centering
+  \caption{关键数字口径速查。所有幅度结论均须标注其「划分协议 $\times$ 悬崖定义 $\times$ 归一化口径」组合，以避免混用。}
+  \label{tab:audit}
+  \begin{tabularx}{\textwidth}{@{} p{4.4cm} X p{1.9cm} @{}}
+    \toprule
+    数字 & 口径 & 出处 \\
+    \midrule
+    18.2 pp & 随机划分 · cliffB 机制定义 · $\alpha=0.10$ · 原始覆盖率 · 10 种子 & §3.1 \\
+    17.9 pp & 同上，插值到边际覆盖 0.90（方法阶梯口径） & §3.4 \\
+    17.3 pp & 随机划分 · cliffB · 5 种子（表 4 global 参照） & §3.8 \\
+    19.8 pp & 随机划分 · cliffB · 3 种子（偏移谱基准档） & §3.9 \\
+    9.5 / 5.0 pp & cliffA 数据集级 · 随机 / 骨架划分 & §3.8 \\
+    8.9 pp & 骨架划分 · cliffB 机制定义 & §3.8 \\
+    +1.22 pp & \sig{d\_wstd} · 覆盖率匹配口径（插值到边际覆盖 0.90） & §3.3 表 2 \\
+    +0.36 / $-0.71$ pp & \sig{d\_wstd} · 原始覆盖率 · 随机 / 骨架 & §3.8 表 4 \\
+    8.6 pp & CQR 后残余差距 · 覆盖率匹配口径 · cliffB & §3.4 表 3 \\
+    6.8 pp & CQR 后残余差距 · 原始覆盖率 · cliffA · 随机划分（9.5 $-$ 2.73） & §3.8 \\
+    3.6–5.3 倍 & AD 域内悬崖/非悬崖失败率比 · 8 种界定逐项 & §3.5 \\
+    4.2 倍 & 主界定（距离型 20\% 分位）的同一比值 & §3.5 \\
+    18.1 pp（预检 8 数据集合并） & 预检阶段 8 数据集 · cliffB · 随机效应合并（CI 13.8–22.3） & §3.1 图 2B \\
+    18.1 pp（分层） & 最疏相似度十分位的 cliffB 差距（分层口径，与上一行不同源） & §3.9 发现 4、图 14C \\
+    +13.2 $\to$ +30.1 pp（cliffB）/ +7.3 $\to$ +17.9 pp（cliffA） & $\alpha$ 扫描 $\alpha\in\{0.07\to0.20\}$ · 4 种子 & §3.1 \\
+    +19.8 $\to$ +15.8 $\to$ +10.3 pp（cliffB）/ +11.0 $\to$ +7.6 $\to$ +4.4 pp（cliffA） & 偏移谱结构轴 random$\to$精确骨架$\to$泛化骨架 · 3 种子 & §3.9 \\
+    0.188 / 0.284 & 活性偏移 40\%/20\% 下的\textbf{全体}边际覆盖（测试集 cliffB 悬崖占 4.4\%/6.5\%） & §3.9 发现 2 \\
+    +10.4 / +16.0 pp & 自适应共形在活性偏移下的悬崖组覆盖改善 & §3.9 发现 3 \\
+    35.3\% vs 13.3\% & 下游低估风险 $\tau=0.75$ · global · 随机划分 & §3.7 \\
+    +35.7 $\sim$ +88.0 pp & 分类标签悬崖 vs 非悬崖覆盖差距 · 5 基准 · 集合共形 & §3.10 \\
+    +0.5 $\sim$ +2.4 pp & \sig{d\_wstd}/\sig{d\_std} 逐组合实测 $\Delta$Cov · 原始覆盖率 · 机制扫描 & §3.2 \\
+    $\rho = 0.865$ & \sig{net\_mag} 部署前预测力 · 与实测悬崖组覆盖变化的秩相关（$n=16 = 8$ 信号 $\times$ 2 表示） & §3.3 \\
+    +6.37 / +1.05 / $-4.38$ $\to$ $-12.63$ pp & 表 4 判读中的 cliffB 机制定义读数（随机/骨架） & §3.8 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+% ===================== 表 3：错配量-伤害逐信号对应（§3.2） =====================
+\begin{table}[htbp]
+  \centering
+  \caption{错配量 $M$ 与伤害的逐信号对应关系（$M$ 取四族范围；net\_mag 与实测 $\Delta$Cov 以 RF 族为准；\sig{rf\_std} 行列出两个表示各自的实现级读数，即图 5 的数据）。}
+  \label{tab:misalign}
+  \begin{threeparttable}
+  \begin{tabularx}{\textwidth}{@{} l X X c X @{}}
+    \toprule
+    信号 & $M$（四族范围） & net\_mag（无量纲比值） & 实测 $\Delta$Cov (pp，原始覆盖率) & 判读 \\
+    \midrule
+    \sig{d\_pair} / \sig{d\_pair\_gap} & $-0.19 \sim -0.18$ & $\approx 0$（$-0.004$） & $-0.3$ / $-0.6$ & 反向偏科，不伤害 \\
+    \sig{d\_iqr}             & $-0.04 \sim -0.02$ & +0.033 & +0.5 & 无判别力，接近零 \\
+    \sig{d\_wstd} / \sig{d\_std} & $\approx -0.03 \sim 0.00$ & +0.063 / +0.060 & +1.7 / +1.9 & 对齐信号，小幅受益 \\
+    \sig{d\_nb}              & +0.14 $\sim$ +0.16 & $-0.046$ & $-3.6$ & 正向偏科，显著伤害 \\
+    \sig{rf\_std}            & +0.05 $\sim$ +0.18（族依赖：D-MPNN 族仅 +0.054，该族伤害接近消失，+0.4 pp） & $-0.033 \sim +0.001$（实现级）\tnote{*} & $-5.2$ / $-6.5$ & 正向偏科，显著伤害 \\
+    \sig{d\_nn\_sim}         & +0.40 $\sim$ +0.47 & +0.037 & +1.7 & \textbf{唯一落入「M>0 但净加宽」区} \\
+    \bottomrule
+  \end{tabularx}
+  \begin{tablenotes}\footnotesize
+    \item[*] \sig{rf\_std} 的实现级 net\_mag（两表示分别 +0.001 / $-0.033$，无量纲比值）与 SI §S5.5 合并判据的信号级 net\_mag（$-1.63$ pp，两表示合并后的净收紧幅度，单位 pp）是两个不同口径的量，不可直接比较。
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+% ===================== 表 4：覆盖率匹配到 0.90（原表 2） =====================
+\begin{table}[htbp]
+  \centering
+  \caption{覆盖率匹配到 0.90 时各条件化信号对悬崖组覆盖的影响（逐配对插值 + 配对 Wilcoxon）。}
+  \label{tab:covmatch}
+  \begin{tabular}{@{} l S[table-format=+1.2] c c l @{}}
+    \toprule
+    方法 & {$\Delta$ 悬崖组覆盖 (pp)} & {Wilcoxon $p$} & {方向一致} & {$\Delta$ 宽度} \\
+    \midrule
+    \textbf{Mondrian $\leftarrow$ \sig{d\_wstd}} & {\bfseries +1.22} & $0.099$ & 10/15 & $-0.008$（不更宽） \\
+    Mondrian $\leftarrow$ \sig{d\_std}  & +1.40 & $0.108$ & 11/15 & +0.003 \\
+    \textbf{Mondrian $\leftarrow$ \sig{rf\_std}} & {\bfseries -4.73} & $1\times10^{-4}$ & 4/15 & {\bfseries -0.077}（更窄） \\
+    \textbf{Mondrian $\leftarrow$ \sig{d\_nb}}   & {\bfseries -4.87} & $1\times10^{-4}$ & 3/15 & +0.009 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ===================== 表 5：方法阶梯（原表 3） =====================
+\begin{table}[htbp]
+  \centering
+  \caption{方法阶梯：各方法在同等边际覆盖 0.90 下的悬崖组覆盖与宽度代价（覆盖率匹配批跑；global 与 Mondrian 底层为随机森林，CQR 底层为梯度提升）。}
+  \label{tab:ladder}
+  \begin{threeparttable}
+  \begin{tabular}{@{} l S[table-format=1.4] S[table-format=2.1] l @{}}
+    \toprule
+    方法 & {悬崖组覆盖} & {差距 (pp)} & {宽度代价} \\
+    \midrule
+    \textbf{CQR}                         & {\bfseries 0.8175} & {\bfseries 8.6}  & {\bfseries +6.3\%} \\
+    Mondrian $\leftarrow$ \sig{d\_wstd}  & 0.7413 & 16.5 & +0.1\% \\
+    \textbf{global（无条件化）}          & 0.7287 & {\bfseries 17.9} & \multicolumn{1}{c}{—} \\
+    Mondrian $\leftarrow$ \sig{rf\_std} & 0.6767 & 23.3 & $-2.4\%$ \\
+    Mondrian $\leftarrow$ \sig{d\_nb}    & 0.6713 & {\bfseries 23.8} & +1.0\% \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}\footnotesize
+    \item[注] global 与 Mondrian 各行的底层模型为随机森林（同模型对照）；CQR 以梯度提升（HGB）为底层模型，其改善包含底层模型差异的贡献，不可全部归因于共形化本身。
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+% ===================== 表 6：R1 骨架划分下仍然成立（§3.8） =====================
+\begin{table}[htbp]
+  \centering
+  \caption{R1：现象在骨架划分下仍然成立（S6 通过）。按预先指定的稳定读数（与划分无关的数据集级 cliffA），骨架划分下差距仍然显著。}
+  \label{tab:r1}
+  \begin{tabular}{@{} l S[table-format=+1.1] c l @{}}
+    \toprule
+    划分 · 悬崖定义 & {$\Delta$ 悬崖覆盖差距 (pp)} & {方向一致} & {配对 Wilcoxon} \\
+    \midrule
+    随机 · cliffA（数据集级，主读数） & {\bfseries +9.5} & 14/15 & $p = 6.1\times10^{-5}$ \\
+    随机 · cliffB（机制定义）         & {\bfseries +17.3} & 15/15 & $p = 3.1\times10^{-5}$ \\
+    \textbf{骨架 · cliffA}            & {\bfseries +5.0} & \textbf{13/15} & \textbf{$p = 4.3\times10^{-4}$} \\
+    骨架 · cliffB                     & +8.9 & 12/15 & $p = 2.1\times10^{-3}$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ===================== 表 7：随机 vs 骨架 × 8 方法（原表 4） =====================
+\begin{table}[htbp]
+  \centering
+  \caption{覆盖差距与宽度代价：随机 vs 骨架划分 $\times$ 8 方法（$\alpha = 0.10$，15 数据集 $\times$ 5 种子；$\Delta$ = 相对 global 的悬崖组覆盖率变化，主列为数据集级 cliffA；宽度为相对 global 的百分比变化）。}
+  \label{tab:methods}
+  \begin{threeparttable}
+  \begin{tabularx}{\textwidth}{@{} l X c X c l @{}}
+    \toprule
+    方法 & \multicolumn{2}{c}{随机划分} & \multicolumn{2}{c}{骨架划分} & 宽度 $\Delta$(\%) \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+    & $\Delta$Cov (pp) & 方向 & $\Delta$Cov (pp) & 方向 & (随机 / 骨架) \\
+    \midrule
+    global（参照） & — & — & — & — & — \\
+    CQR                         & +2.73 ($p=5.4\times10^{-3}$) & 13/15 & +1.07 ($p=0.25$) & 10/15 & +6.3\% / +2.9\% \\
+    adaptive（归一化）          & +2.54 ($p=0.055$) & 12/15 & $-0.34$ ($p=0.98$) & 9/15 & +21.0\% / +27.9\% \\
+    cluster                     & +1.15 ($p=0.041$) & 12/15 & +0.26 ($p=0.68$) & 10/15 & +4.2\% / +1.8\% \\
+    weighted（协变量偏移）      & $-1.26$ ($p=0.036$) & 4/15 & $-1.94$ ($p=0.016$) & 3/15 & $-1.4$\% / $-2.6$\% \\
+    kNN-weighted                & $-1.31$ ($p=0.083$) & 5/15 & $-1.67$ ($p=0.048$) & 4/15 & $-3.2$\% / $-3.1$\% \\
+    Mondrian $\leftarrow$ \sig{rf\_std} & {\bfseries -3.96} ($p=4.3\times10^{-4}$) & 2/15 & {\bfseries -5.28} ($p=3.1\times10^{-4}$) & 1/15 & $-1.3$\% / $-0.6$\% \\
+    Mondrian $\leftarrow$ \sig{d\_wstd}（对齐） & +0.36 ($p=0.36$) & 9/15 & $-0.71$ ($p=0.19$) & 5/15 & +2.4\% / +1.4\% \\
+    Mondrian $\leftarrow$ \sig{d\_nb}（错配）   & {\bfseries -2.70} ($p=6.3\times10^{-3}$) & 3/15 & {\bfseries -3.82} ($p=1.5\times10^{-3}$) & 2/15 & +2.6\% / +1.8\% \\
+    \bottomrule
+  \end{tabularx}
+  \begin{tablenotes}\footnotesize
+    \item[注] 本表为原始覆盖率视图（未做覆盖率匹配），故 \sig{d\_wstd} 的数值小于 §3.3 匹配口径下的 +1.22 pp；两者口径不同，不可混用。global 行（参照）无变化。
+  \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+% ===================== 表 8：信号精度阶梯（原表 5） =====================
+\begin{table}[htbp]
+  \centering
+  \caption{信号精度阶梯（固定预测器，15 数据集 $\times$ 5 种子；$\Delta$ 为悬崖组覆盖率变化，A 列 = cliffA 数据集级口径、B 列 = cliffB 机制定义口径）。}
+  \label{tab:kablation}
+  \begin{tabular}{@{} S[table-format=3.0] S[table-format=1.3] S[table-format=1.3] S[table-format=1.3] S[table-format=1.2] S[table-format=1.2] @{}}
+    \toprule
+    {$k$} & {AUC\_fail} & {AUC\_cliffB} & {$M$} & {$\Delta$ 悬崖覆盖 A (pp)} & {$\Delta$ 悬崖覆盖 B (pp)} \\
+    \midrule
+    2   & 0.592 & 0.493 & +0.099 & -0.37 & -0.57 \\
+    5   & 0.647 & 0.539 & +0.108 & -0.45 & -0.87 \\
+    10  & 0.678 & 0.545 & +0.132 & -2.39 & -1.38 \\
+    25  & 0.702 & 0.524 & +0.178 & -3.03 & -3.34 \\
+    50  & 0.712 & 0.529 & +0.182 & -3.86 & -4.68 \\
+    100 & 0.719 & 0.533 & +0.186 & -3.91 & -3.59 \\
+    200 & 0.722 & 0.532 & +0.190 & -3.96 & -4.38 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ===================== 表 9：预注册分析计划逐条判读 =====================
+\begin{table}[htbp]
+  \centering
+  \caption{预注册分析计划逐条判读（标准写于数据之前）。R1 的方向一致性实测 13/15 恰好等于通过门槛（$\geq$13/15），属临界通过。}
+  \label{tab:prereg}
+  \begin{tabularx}{\textwidth}{@{} c l X X c @{}}
+    \toprule
+    编号 & 预注册 & 通过条件 & 实测 & 结论 \\
+    \midrule
+    \textbf{R1} & S6 & 骨架下合并 $\Delta>0$、$p<0.05$、方向一致 $\geq$13/15 & cliffA +5.0 pp、13/15、$p = 4.3\times10^{-4}$ & 通过 \\
+    \textbf{R2} & S7 & 最优基线之后残余 $\Delta>2$ pp & CQR 后残余 6.8 pp（非 CQR 最强的 adaptive 之后残余 7.0 pp） & 通过 \\
+    \textbf{R3} & 探索性 & AUC\_fail 与 $|\Delta$Cov| 随 $k$ 单调（Spearman $>0.5$） & AUC\_fail 严格单调（聚合 $\rho = 1.000$）；$|\Delta$Cov| 聚合 $\rho = 0.893$ & 通过 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\end{document}

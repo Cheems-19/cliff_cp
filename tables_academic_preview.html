@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>论文表格学术化重排 · 预览（booktabs + siunitx 风格）</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --rule:#000; --muted:#555; --accent:#7a1f1f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:"Songti SC","SimSun","Noto Serif CJK SC",Georgia,serif;
+    color:var(--ink); background:#f7f7f4; margin:0; padding:32px 16px 80px;
+    line-height:1.5;
+  }
+  .wrap{max-width:920px; margin:0 auto;}
+  h1{font-size:20px; font-weight:700; text-align:center; margin:0 0 4px;}
+  .sub{text-align:center; color:var(--muted); font-size:13px; margin:0 0 28px;}
+  .tbl-block{margin:0 0 40px; background:#fff; border:1px solid #e3e3df;
+    border-radius:6px; padding:18px 18px 14px; box-shadow:0 1px 2px rgba(0,0,0,.04);}
+  .tbl-cap{font-size:13.5px; font-weight:700; margin:0 0 12px; color:var(--ink);}
+  .tbl-cap .lab{color:var(--accent); margin-right:6px;}
+  table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  /* booktabs 三线表：顶/底线粗，中线细，无竖线 */
+  thead th{border-bottom:1.6px solid var(--rule); padding:7px 9px; text-align:left;
+    font-weight:700; vertical-align:bottom;}
+  tbody td{border:none; padding:5px 9px; vertical-align:top;}
+  tbody tr{border-bottom:.8px solid #c9c9c4;}
+  table > tbody > tr:last-child > td{border-bottom:1.6px solid var(--rule);}
+  /* 数字列：等宽数字 + 右对齐，模拟 siunitx 小数点对齐 */
+  .num{font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap;
+    font-family:"DejaVu Sans Mono","Cascadia Code",ui-monospace,monospace; font-size:12px;}
+  .numc{font-variant-numeric:tabular-nums; text-align:center; white-space:nowrap;
+    font-family:"DejaVu Sans Mono","Cascadia Code",ui-monospace,monospace; font-size:12px;}
+  .ctr{text-align:center; white-space:nowrap;}
+  .grp th{border-bottom:.8px solid #c9c9c4; text-align:center; font-weight:700;}
+  .grp th.lft{text-align:left;}
+  code{font-family:"DejaVu Sans Mono",ui-monospace,monospace; font-size:11.5px;
+    background:#f0f0ec; padding:0 3px; border-radius:3px;}
+  .note{font-size:11.5px; color:var(--muted); margin-top:8px; padding-top:6px;
+    border-top:.8px solid #e0e0db;}
+  .bold{font-weight:700;}
+  .em{font-style:normal; color:var(--accent); font-weight:700;}
+  .dash{color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>共形预测在活性悬崖上的覆盖失效 · 表格学术化重排</h1>
+  <p class="sub">LaTeX（booktabs 三线表 + siunitx 小数点对齐 + threeparttable 表注）预览 · 对应 <code>tables_academic.tex</code></p>
+
+  <!-- 表 1 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 1</span>条件化信号概览。所有信号均可在无查询标签的情况下计算。</p>
+    <table>
+      <thead><tr><th>信号</th><th>含义</th><th>侧别</th></tr></thead>
+      <tbody>
+        <tr><td><code>d_wstd</code></td><td>训练邻居标签的<strong>加权</strong>标准差</td><td>数据侧</td></tr>
+        <tr><td><code>d_std</code></td><td>训练邻居标签的标准差</td><td>数据侧</td></tr>
+        <tr><td><code>d_iqr</code></td><td>训练邻居标签的 IQR</td><td>数据侧</td></tr>
+        <tr><td><code>d_nb</code></td><td>相似度 ≥ 0.85 的训练邻居数</td><td>数据侧（密度）</td></tr>
+        <tr><td><code>d_nn_sim</code></td><td>最近训练邻居的 Tanimoto 相似度</td><td>数据侧（距离）</td></tr>
+        <tr><td><code>d_pair</code> / <code>d_pair_gap</code></td><td>邻域内最大标签差（同一量的两种实现）</td><td>数据侧</td></tr>
+        <tr><td><code>rf_std</code></td><td>模型侧不确定性：RF 树间标准差 / GBR 多种子集成标准差 / D-MPNN 集成标准差</td><td>模型侧</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 表 2 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 2</span>关键数字口径速查。所有幅度结论均须标注其「划分协议 × 悬崖定义 × 归一化口径」组合，以避免混用。</p>
+    <table>
+      <thead><tr><th>数字</th><th>口径</th><th>出处</th></tr></thead>
+      <tbody>
+        <tr><td class="num">18.2 pp</td><td>随机划分 · cliffB 机制定义 · α=0.10 · 原始覆盖率 · 10 种子</td><td>§3.1</td></tr>
+        <tr><td class="num">17.9 pp</td><td>同上，插值到边际覆盖 0.90（方法阶梯口径）</td><td>§3.4</td></tr>
+        <tr><td class="num">17.3 pp</td><td>随机划分 · cliffB · 5 种子（表 4 global 参照）</td><td>§3.8</td></tr>
+        <tr><td class="num">19.8 pp</td><td>随机划分 · cliffB · 3 种子（偏移谱基准档）</td><td>§3.9</td></tr>
+        <tr><td class="num">9.5 / 5.0 pp</td><td>cliffA 数据集级 · 随机 / 骨架划分</td><td>§3.8</td></tr>
+        <tr><td class="num">8.9 pp</td><td>骨架划分 · cliffB 机制定义</td><td>§3.8</td></tr>
+        <tr><td class="num">+1.22 pp</td><td><code>d_wstd</code> · 覆盖率匹配口径（插值到边际覆盖 0.90）</td><td>§3.3 表 2</td></tr>
+        <tr><td class="num">+0.36 / −0.71 pp</td><td><code>d_wstd</code> · 原始覆盖率 · 随机 / 骨架</td><td>§3.8 表 4</td></tr>
+        <tr><td class="num">8.6 pp</td><td>CQR 后残余差距 · 覆盖率匹配口径 · cliffB</td><td>§3.4 表 3</td></tr>
+        <tr><td class="num">6.8 pp</td><td>CQR 后残余差距 · 原始覆盖率 · cliffA · 随机划分（9.5 − 2.73）</td><td>§3.8</td></tr>
+        <tr><td class="num">3.6–5.3 倍</td><td>AD 域内悬崖/非悬崖失败率比 · 8 种界定逐项</td><td>§3.5</td></tr>
+        <tr><td class="num">4.2 倍</td><td>主界定（距离型 20% 分位）的同一比值</td><td>§3.5</td></tr>
+        <tr><td class="num">18.1 pp（预检 8 数据集合并）</td><td>预检阶段 8 数据集 · cliffB · 随机效应合并（CI 13.8–22.3）</td><td>§3.1 图 2B</td></tr>
+        <tr><td class="num">18.1 pp（分层）</td><td>最疏相似度十分位的 cliffB 差距（分层口径，与上一行不同源）</td><td>§3.9 发现 4、图 14C</td></tr>
+        <tr><td class="num">+13.2 → +30.1 pp（cliffB）/ +7.3 → +17.9 pp（cliffA）</td><td>α 扫描 α∈{0.07→0.20} · 4 种子</td><td>§3.1</td></tr>
+        <tr><td class="num">+19.8 → +15.8 → +10.3 pp（cliffB）/ +11.0 → +7.6 → +4.4 pp（cliffA）</td><td>偏移谱结构轴 random→精确骨架→泛化骨架 · 3 种子</td><td>§3.9</td></tr>
+        <tr><td class="num">0.188 / 0.284</td><td>活性偏移 40%/20% 下的<strong>全体</strong>边际覆盖（测试集 cliffB 悬崖占 4.4%/6.5%）</td><td>§3.9 发现 2</td></tr>
+        <tr><td class="num">+10.4 / +16.0 pp</td><td>自适应共形在活性偏移下的悬崖组覆盖改善</td><td>§3.9 发现 3</td></tr>
+        <tr><td class="num">35.3% vs 13.3%</td><td>下游低估风险 τ=0.75 · global · 随机划分</td><td>§3.7</td></tr>
+        <tr><td class="num">+35.7 ~ +88.0 pp</td><td>分类标签悬崖 vs 非悬崖覆盖差距 · 5 基准 · 集合共形</td><td>§3.10</td></tr>
+        <tr><td class="num">+0.5 ~ +2.4 pp</td><td><code>d_wstd</code>/<code>d_std</code> 逐组合实测 ΔCov · 原始覆盖率 · 机制扫描</td><td>§3.2</td></tr>
+        <tr><td class="num">ρ = 0.865</td><td><code>net_mag</code> 部署前预测力 · 与实测悬崖组覆盖变化的秩相关（n=16 = 8 信号 × 2 表示）</td><td>§3.3</td></tr>
+        <tr><td class="num">+6.37 / +1.05 / −4.38 → −12.63 pp</td><td>表 4 判读中的 cliffB 机制定义读数（随机/骨架）</td><td>§3.8</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 表 3 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 3</span>错配量 <em>M</em> 与伤害的逐信号对应关系（<em>M</em> 取四族范围；net_mag 与实测 ΔCov 以 RF 族为准；<code>rf_std</code> 行列出两个表示各自的实现级读数，即图 5 的数据）。</p>
+    <table>
+      <thead><tr><th>信号</th><th><em>M</em>（四族范围）</th><th>net_mag（无量纲比值）</th><th>实测 ΔCov (pp，原始覆盖率)</th><th>判读</th></tr></thead>
+      <tbody>
+        <tr><td><code>d_pair</code> / <code>d_pair_gap</code></td><td class="num">−0.19 ~ −0.18</td><td class="num">≈ 0（−0.004）</td><td class="num">−0.3 / −0.6</td><td>反向偏科，不伤害</td></tr>
+        <tr><td><code>d_iqr</code></td><td class="num">−0.04 ~ −0.02</td><td class="num">+0.033</td><td class="num">+0.5</td><td>无判别力，接近零</td></tr>
+        <tr><td><code>d_wstd</code> / <code>d_std</code></td><td class="num">≈ −0.03 ~ 0.00</td><td class="num">+0.063 / +0.060</td><td class="num">+1.7 / +1.9</td><td>对齐信号，小幅受益</td></tr>
+        <tr><td><code>d_nb</code></td><td class="num">+0.14 ~ +0.16</td><td class="num">−0.046</td><td class="num">−3.6</td><td>正向偏科，显著伤害</td></tr>
+        <tr><td><code>rf_std</code><sup>*</sup></td><td class="num">+0.05 ~ +0.18（族依赖：D-MPNN 族仅 +0.054，该族伤害接近消失，+0.4 pp）</td><td class="num">−0.033 ~ +0.001（实现级）</td><td class="num">−5.2 / −6.5</td><td>正向偏科，显著伤害</td></tr>
+        <tr><td><code>d_nn_sim</code></td><td class="num">+0.40 ~ +0.47</td><td class="num">+0.037</td><td class="num">+1.7</td><td class="em">唯一落入「M&gt;0 但净加宽」区</td></tr>
+      </tbody>
+    </table>
+    <p class="note"><sup>*</sup> <code>rf_std</code> 的实现级 net_mag（两表示分别 +0.001 / −0.033，无量纲比值）与 SI §S5.5 合并判据的信号级 net_mag（−1.63 pp，两表示合并后的净收紧幅度，单位 pp）是两个不同口径的量，不可直接比较。</p>
+  </div>
+
+  <!-- 表 4 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 4</span>覆盖率匹配到 0.90 时各条件化信号对悬崖组覆盖的影响（逐配对插值 + 配对 Wilcoxon）。</p>
+    <table>
+      <thead><tr><th>方法</th><th class="num">Δ 悬崖组覆盖 (pp)</th><th class="ctr">Wilcoxon p</th><th class="ctr">方向一致</th><th>Δ 宽度</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">Mondrian ← <code>d_wstd</code></td><td class="num bold">+1.22</td><td class="ctr">0.099</td><td class="ctr">10/15</td><td>−0.008（不更宽）</td></tr>
+        <tr><td>Mondrian ← <code>d_std</code></td><td class="num">+1.40</td><td class="ctr">0.108</td><td class="ctr">11/15</td><td>+0.003</td></tr>
+        <tr><td class="bold">Mondrian ← <code>rf_std</code></td><td class="num bold">−4.73</td><td class="ctr">1×10⁻⁴</td><td class="ctr">4/15</td><td class="bold">−0.077（更窄）</td></tr>
+        <tr><td class="bold">Mondrian ← <code>d_nb</code></td><td class="num bold">−4.87</td><td class="ctr">1×10⁻⁴</td><td class="ctr">3/15</td><td>+0.009</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 表 5 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 5</span>方法阶梯：各方法在同等边际覆盖 0.90 下的悬崖组覆盖与宽度代价（覆盖率匹配批跑；global 与 Mondrian 底层为随机森林，CQR 底层为梯度提升）。</p>
+    <table>
+      <thead><tr><th>方法</th><th class="num">悬崖组覆盖</th><th class="num">差距 (pp)</th><th>宽度代价</th></tr></thead>
+      <tbody>
+        <tr><td class="bold">CQR</td><td class="num bold">0.8175</td><td class="num bold">8.6</td><td class="bold">+6.3%</td></tr>
+        <tr><td>Mondrian ← <code>d_wstd</code></td><td class="num">0.7413</td><td class="num">16.5</td><td>+0.1%</td></tr>
+        <tr><td class="bold">global（无条件化）</td><td class="num">0.7287</td><td class="num bold">17.9</td><td class="dash">—</td></tr>
+        <tr><td>Mondrian ← <code>rf_std</code></td><td class="num">0.6767</td><td class="num">23.3</td><td>−2.4%</td></tr>
+        <tr><td>Mondrian ← <code>d_nb</code></td><td class="num">0.6713</td><td class="num bold">23.8</td><td>+1.0%</td></tr>
+      </tbody>
+    </table>
+    <p class="note">注：global 与 Mondrian 各行的底层模型为随机森林（同模型对照）；CQR 以梯度提升（HGB）为底层模型，其改善包含底层模型差异的贡献，不可全部归因于共形化本身。</p>
+  </div>
+
+  <!-- 表 6 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 6</span>R1：现象在骨架划分下仍然成立（S6 通过）。按预先指定的稳定读数（与划分无关的数据集级 cliffA），骨架划分下差距仍然显著。</p>
+    <table>
+      <thead><tr><th>划分 · 悬崖定义</th><th class="num">Δ 悬崖覆盖差距 (pp)</th><th class="ctr">方向一致</th><th>配对 Wilcoxon</th></tr></thead>
+      <tbody>
+        <tr><td>随机 · cliffA（数据集级，主读数）</td><td class="num bold">+9.5</td><td class="ctr">14/15</td><td>p = 6.1×10⁻⁵</td></tr>
+        <tr><td>随机 · cliffB（机制定义）</td><td class="num bold">+17.3</td><td class="ctr">15/15</td><td>p = 3.1×10⁻⁵</td></tr>
+        <tr><td class="bold">骨架 · cliffA</td><td class="num bold">+5.0</td><td class="ctr bold">13/15</td><td class="bold">p = 4.3×10⁻⁴</td></tr>
+        <tr><td>骨架 · cliffB</td><td class="num">+8.9</td><td class="ctr">12/15</td><td>p = 2.1×10⁻³</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 表 7 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 7</span>覆盖差距与宽度代价：随机 vs 骨架划分 × 8 方法（α = 0.10，15 数据集 × 5 种子；Δ = 相对 global 的悬崖组覆盖率变化，主列为数据集级 cliffA；宽度为相对 global 的百分比变化）。</p>
+    <table>
+      <thead>
+        <tr class="grp"><th class="lft" rowspan="2">方法</th><th colspan="2">随机划分</th><th colspan="2">骨架划分</th><th rowspan="2">宽度 Δ(%)<br>(随机 / 骨架)</th></tr>
+        <tr class="grp"><th>ΔCov (pp)</th><th>方向</th><th>ΔCov (pp)</th><th>方向</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>global（参照）</td><td class="dash">—</td><td class="ctr">—</td><td class="dash">—</td><td class="ctr">—</td><td class="dash">—</td></tr>
+        <tr><td>CQR</td><td>+2.73 (p=5.4×10⁻³)</td><td class="ctr">13/15</td><td>+1.07 (p=0.25)</td><td class="ctr">10/15</td><td>+6.3% / +2.9%</td></tr>
+        <tr><td>adaptive（归一化）</td><td>+2.54 (p=0.055)</td><td class="ctr">12/15</td><td>−0.34 (p=0.98)</td><td class="ctr">9/15</td><td>+21.0% / +27.9%</td></tr>
+        <tr><td>cluster</td><td>+1.15 (p=0.041)</td><td class="ctr">12/15</td><td>+0.26 (p=0.68)</td><td class="ctr">10/15</td><td>+4.2% / +1.8%</td></tr>
+        <tr><td>weighted（协变量偏移）</td><td>−1.26 (p=0.036)</td><td class="ctr">4/15</td><td>−1.94 (p=0.016)</td><td class="ctr">3/15</td><td>−1.4% / −2.6%</td></tr>
+        <tr><td>kNN-weighted</td><td>−1.31 (p=0.083)</td><td class="ctr">5/15</td><td>−1.67 (p=0.048)</td><td class="ctr">4/15</td><td>−3.2% / −3.1%</td></tr>
+        <tr><td>Mondrian ← <code>rf_std</code></td><td class="bold">−3.96 (p=4.3×10⁻⁴)</td><td class="ctr">2/15</td><td class="bold">−5.28 (p=3.1×10⁻⁴)</td><td class="ctr">1/15</td><td>−1.3% / −0.6%</td></tr>
+        <tr><td>Mondrian ← <code>d_wstd</code>（对齐）</td><td>+0.36 (p=0.36)</td><td class="ctr">9/15</td><td>−0.71 (p=0.19)</td><td class="ctr">5/15</td><td>+2.4% / +1.4%</td></tr>
+        <tr><td>Mondrian ← <code>d_nb</code>（错配）</td><td class="bold">−2.70 (p=6.3×10⁻³)</td><td class="ctr">3/15</td><td class="bold">−3.82 (p=1.5×10⁻³)</td><td class="ctr">2/15</td><td>+2.6% / +1.8%</td></tr>
+      </tbody>
+    </table>
+    <p class="note">注：本表为原始覆盖率视图（未做覆盖率匹配），故 <code>d_wstd</code> 的数值小于 §3.3 匹配口径下的 +1.22 pp；两者口径不同，不可混用。global 行（参照）无变化。</p>
+  </div>
+
+  <!-- 表 8 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 8</span>信号精度阶梯（固定预测器，15 数据集 × 5 种子；Δ 为悬崖组覆盖率变化，A 列 = cliffA 数据集级口径、B 列 = cliffB 机制定义口径）。</p>
+    <table>
+      <thead><tr><th class="num">k</th><th class="num">AUC_fail</th><th class="num">AUC_cliffB</th><th class="num">M</th><th class="num">Δ 悬崖覆盖 A (pp)</th><th class="num">Δ 悬崖覆盖 B (pp)</th></tr></thead>
+      <tbody>
+        <tr><td class="num">2</td><td class="num">0.592</td><td class="num">0.493</td><td class="num">+0.099</td><td class="num">−0.37</td><td class="num">−0.57</td></tr>
+        <tr><td class="num">5</td><td class="num">0.647</td><td class="num">0.539</td><td class="num">+0.108</td><td class="num">−0.45</td><td class="num">−0.87</td></tr>
+        <tr><td class="num">10</td><td class="num">0.678</td><td class="num">0.545</td><td class="num">+0.132</td><td class="num">−2.39</td><td class="num">−1.38</td></tr>
+        <tr><td class="num">25</td><td class="num">0.702</td><td class="num">0.524</td><td class="num">+0.178</td><td class="num">−3.03</td><td class="num">−3.34</td></tr>
+        <tr><td class="num">50</td><td class="num">0.712</td><td class="num">0.529</td><td class="num">+0.182</td><td class="num">−3.86</td><td class="num">−4.68</td></tr>
+        <tr><td class="num">100</td><td class="num">0.719</td><td class="num">0.533</td><td class="num">+0.186</td><td class="num">−3.91</td><td class="num">−3.59</td></tr>
+        <tr><td class="num">200</td><td class="num">0.722</td><td class="num">0.532</td><td class="num">+0.190</td><td class="num">−3.96</td><td class="num">−4.38</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 表 9 -->
+  <div class="tbl-block">
+    <p class="tbl-cap"><span class="lab">表 9</span>预注册分析计划逐条判读（标准写于数据之前）。R1 的方向一致性实测 13/15 恰好等于通过门槛（≥13/15），属临界通过。</p>
+    <table>
+      <thead><tr><th class="ctr">编号</th><th>预注册</th><th>通过条件</th><th>实测</th><th class="ctr">结论</th></tr></thead>
+      <tbody>
+        <tr><td class="ctr bold">R1</td><td>S6</td><td>骨架下合并 Δ&gt;0、p&lt;0.05、方向一致 ≥13/15</td><td>cliffA +5.0 pp、13/15、p = 4.3×10⁻⁴</td><td class="ctr">通过</td></tr>
+        <tr><td class="ctr bold">R2</td><td>S7</td><td>最优基线之后残余 Δ&gt;2 pp</td><td>CQR 后残余 6.8 pp（非 CQR 最强的 adaptive 之后残余 7.0 pp）</td><td class="ctr">通过</td></tr>
+        <tr><td class="ctr bold">R3</td><td>探索性</td><td>AUC_fail 与 |ΔCov| 随 k 单调（Spearman &gt;0.5）</td><td>AUC_fail 严格单调（聚合 ρ = 1.000）；|ΔCov| 聚合 ρ = 0.893</td><td class="ctr">通过</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

@@ -40,7 +40,7 @@
   "version": "1.0.0",
   "related_identifiers": [
     {
-      "identifier": "https://github.com/{user}/cliff-cp",
+      "identifier": "https://github.com/Cheems-19/cliff_cp",
       "relation": "isSupplementTo",
       "scheme": "url"
     },

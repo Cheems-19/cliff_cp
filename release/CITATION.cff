@@ -30,8 +30,8 @@ contact:
     given-names: "{GivenName1}"
     email: "{corresponding@institution.edu}"
 
-repository-code: "https://github.com/{user}/cliff-cp"
-url: "https://github.com/{user}/cliff-cp"
+repository-code: "https://github.com/Cheems-19/cliff_cp"
+url: "https://github.com/Cheems-19/cliff_cp"
 
 keywords:
   - conformal prediction

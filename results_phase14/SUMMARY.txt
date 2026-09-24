@@ -1,0 +1,37 @@
+==============================================================================
+Phase 14 — 覆盖转移恒等式：验证 + 伤害判据检验
+==============================================================================
+
+### run=rf_ecfp  molecules=70170  datasets=15  cliffB=0.0408
+
+### run=rf_rdkit  molecules=70170  datasets=15  cliffB=0.0408
+
+### (a) 恒等式验证（应 ~1e-15）
+  n=240  最大残差=1.036e-16  中位残差=3.296e-17
+
+### (b) 伤害判据：净收紧质量 vs 观测 ΔCov（悬崖组）
+  注：ΔCov<0 = 伤害悬崖组；net_tight>0 = 悬崖组被更多地收紧
+  [rf_ecfp] d_wstd      net_tight=-0.136  ΔCov_cliff= +1.78pp  (3/15 数据集受害)
+  [rf_ecfp] d_std       net_tight=-0.141  ΔCov_cliff= +1.64pp  (3/15 数据集受害)
+  [rf_ecfp] d_iqr       net_tight=-0.144  ΔCov_cliff= +0.26pp  (6/15 数据集受害)
+  [rf_ecfp] d_nb        net_tight=+0.282  ΔCov_cliff= -4.16pp  (13/15 数据集受害)
+  [rf_ecfp] d_nn_sim    net_tight=-0.210  ΔCov_cliff= +1.68pp  (6/15 数据集受害)
+  [rf_ecfp] d_pair_gap  net_tight=-0.063  ΔCov_cliff= -0.71pp  (8/15 数据集受害)
+  [rf_ecfp] d_pair      net_tight=-0.075  ΔCov_cliff= -0.38pp  (8/15 数据集受害)
+  [rf_ecfp] rf_std      net_tight=+0.061  ΔCov_cliff= -5.19pp  (13/15 数据集受害)
+  [rf_rdkit] d_wstd      net_tight=-0.102  ΔCov_cliff= +1.70pp  (3/15 数据集受害)
+  [rf_rdkit] d_std       net_tight=-0.090  ΔCov_cliff= +2.05pp  (3/15 数据集受害)
+  [rf_rdkit] d_iqr       net_tight=-0.058  ΔCov_cliff= +0.83pp  (5/15 数据集受害)
+  [rf_rdkit] d_nb        net_tight=+0.345  ΔCov_cliff= -3.07pp  (10/15 数据集受害)
+  [rf_rdkit] d_nn_sim    net_tight=-0.167  ΔCov_cliff= +1.65pp  (6/15 数据集受害)
+  [rf_rdkit] d_pair_gap  net_tight=+0.047  ΔCov_cliff= -0.53pp  (7/15 数据集受害)
+  [rf_rdkit] d_pair      net_tight=+0.096  ΔCov_cliff= -0.16pp  (7/15 数据集受害)
+  [rf_rdkit] rf_std      net_tight=+0.208  ΔCov_cliff= -6.50pp  (14/15 数据集受害)
+
+### (c) 相关性（逐 (run, signal) 聚合到数据集级）
+  [rf_ecfp] corr(net_tight,ΔCov)=-0.862 | corr(收紧致失占比,ΔCov)=-0.755 | corr(net_mag,ΔCov)=+0.837  (n=8)
+  [rf_rdkit] corr(net_tight,ΔCov)=-0.832 | corr(收紧致失占比,ΔCov)=-0.847 | corr(net_mag,ΔCov)=+0.830  (n=8)
+  合并: corr(net_tight,ΔCov)=-0.807 | corr(net_mag,ΔCov)=+0.804  (n=16)
+
+### (d) 可部署性：net_mag / net_tight 只需校准集 + 信号 + 悬崖掩码（无测试标签）
+  → 可作为部署前诊断：先算目标组的净收紧质量，再决定是否用该信号做条件化。

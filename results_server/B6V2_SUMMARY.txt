@@ -1,0 +1,31 @@
+=== B6 分类外推（α=0.10, 标签悬崖 = 训练邻居标签冲突）===
+
+── BACE (n_test/seed=302, 悬崖/seed≈27) ──
+  global               cov_all=0.905 cliff=0.573 non=0.931 gap=+35.7pp (10/10, p=0.00195) size=1.23
+  aps                  cov_all=0.998 cliff=0.996 non=0.999 gap=+0.3pp (1/10, p=0.875) size=1.99
+  mondrian_predclass   cov_all=0.905 cliff=0.573 non=0.931 gap=+35.7pp (10/10, p=0.00195) size=1.23
+  mondrian_nnsim       cov_all=0.911 cliff=0.581 non=0.937 gap=+35.6pp (10/10, p=0.00195) size=1.25
+
+── BBBP (n_test/seed=395, 悬崖/seed≈4) ──
+  global               cov_all=0.893 cliff=0.417 non=0.897 gap=+48.0pp (7/10, p=0.0273) size=1.03
+  aps                  cov_all=0.999 cliff=0.967 non=1.000 gap=+3.3pp (1/10, p=1) size=2.00
+  mondrian_predclass   cov_all=0.893 cliff=0.417 non=0.897 gap=+48.0pp (7/10, p=0.0273) size=1.03
+  mondrian_nnsim       cov_all=0.896 cliff=0.417 non=0.899 gap=+48.2pp (7/10, p=0.0273) size=1.03
+
+── ClinTox (n_test/seed=292, 悬崖/seed≈3) ──
+  global               cov_all=0.909 cliff=0.429 non=0.912 gap=+48.9pp (5/10, p=0.0781) size=0.97
+  aps                  cov_all=1.000 cliff=1.000 non=1.000 gap=+0.0pp (0/10, p=1) size=2.00
+  mondrian_predclass   cov_all=0.909 cliff=0.429 non=0.912 gap=+48.9pp (5/10, p=0.0781) size=0.97
+  mondrian_nnsim       cov_all=0.904 cliff=0.429 non=0.907 gap=+48.7pp (5/10, p=0.0781) size=0.96
+
+── HIV (n_test/seed=8224, 悬崖/seed≈41) ──
+  global               cov_all=0.904 cliff=0.040 non=0.908 gap=+86.8pp (10/10, p=0.00195) size=0.92
+  aps                  cov_all=1.000 cliff=0.997 non=1.000 gap=+0.3pp (1/10, p=1) size=2.00
+  mondrian_predclass   cov_all=0.904 cliff=0.040 non=0.908 gap=+86.8pp (10/10, p=0.00195) size=0.92
+  mondrian_nnsim       cov_all=0.905 cliff=0.067 non=0.909 gap=+84.2pp (10/10, p=0.00195) size=0.92
+
+── Tox21_NR-AR (n_test/seed=1451, 悬崖/seed≈10) ──
+  global               cov_all=0.903 cliff=0.027 non=0.907 gap=+88.0pp (10/10, p=0.00195) size=0.92
+  aps                  cov_all=1.000 cliff=1.000 non=1.000 gap=-0.0pp (0/10, p=1) size=2.00
+  mondrian_predclass   cov_all=0.903 cliff=0.027 non=0.907 gap=+88.0pp (10/10, p=0.00195) size=0.92
+  mondrian_nnsim       cov_all=0.904 cliff=0.081 non=0.908 gap=+82.7pp (10/10, p=0.00195) size=0.92

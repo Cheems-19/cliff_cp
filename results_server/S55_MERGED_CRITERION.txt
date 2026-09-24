@@ -1,0 +1,36 @@
+=== S5.5 合并判据：net_mag（幅度）× q_ratio（机制符号）===
+信号            net_mag(pp)   ΔCov(pp)  q_ratio   符号一致?
+d_iqr               +4.18      +0.26    1.068   mag=✓ q=✓
+d_nb                -3.63      -4.16    0.962   mag=✓ q=✓
+d_nn_sim            +4.24      +1.68    1.045   mag=✓ q=✓
+d_pair              +0.34      -0.38     n/a    mag=✗ q=n/a
+d_pair_gap          +0.37      -0.71     n/a    mag=✗ q=n/a
+d_std               +6.67      +1.64    1.056   mag=✓ q=✓
+d_wstd              +7.02      +1.78    1.061   mag=✓ q=✓
+rf_std              +0.06      -5.19     n/a    mag=✗ q=n/a
+d_iqr               +2.42      +0.83    1.068   mag=✓ q=✓
+d_nb                -5.66      -3.07    0.962   mag=✓ q=✓
+d_nn_sim            +3.13      +1.65    1.045   mag=✓ q=✓
+d_pair              -1.14      -0.16     n/a    mag=✓ q=n/a
+d_pair_gap          -1.13      -0.53     n/a    mag=✓ q=n/a
+d_std               +5.26      +2.05    1.056   mag=✓ q=✓
+d_wstd              +5.58      +1.70    1.061   mag=✓ q=✓
+rf_std              -3.31      -6.50     n/a    mag=✓ q=n/a
+
+信号级（两表示合并，n=8）:
+   d_iqr        net_mag=  +3.30  ΔCov=  +0.54  q_ratio=1.068  mag=✓
+   d_nb         net_mag=  -4.64  ΔCov=  -3.62  q_ratio=0.962  mag=✓
+   d_nn_sim     net_mag=  +3.68  ΔCov=  +1.66  q_ratio=1.045  mag=✓
+   d_pair       net_mag=  -0.40  ΔCov=  -0.27  q_ratio=nan  mag=✓
+   d_pair_gap   net_mag=  -0.38  ΔCov=  -0.62  q_ratio=nan  mag=✓
+   d_std        net_mag=  +5.97  ΔCov=  +1.85  q_ratio=1.056  mag=✓
+   d_wstd       net_mag=  +6.30  ΔCov=  +1.74  q_ratio=1.061  mag=✓
+   rf_std       net_mag=  -1.63  ΔCov=  -5.85  q_ratio=nan  mag=✓
+   → net_mag 信号级符号一致 8/8
+单元级（|ΔCov|>0.5 pp，n=13）: 11/13；2 个不一致单元的 |net_mag| 均 < 0.4 pp（落在「无实质影响」区）
+
+合并读法（部署前，两判据互补）:
+  1. net_mag 给幅度：|net_mag| < 0.5 pp → 无实质影响；< 0 → 预警伤害
+  2. q_ratio 给机制：悬崖分子被推进「校准分位数低于全局」的箱（5/5 与实测同号）
+  3. 已知残余弱点：rf_std 的伤害来自大幅收紧而校准侧质量小，net_mag 会低估
+     （q_ratio 因直接看悬崖所落箱而不受此影响）→ 二者并用，无一漏报

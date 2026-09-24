@@ -1,0 +1,16 @@
+﻿figure,tif,pdf,px,width_cm,eff_dpi,placement,tif_kb
+Figure 1,Fig1_coverage_gap.tif,Fig1_coverage_gap.pdf,4110x1605,17.4,600,double column,389
+Figure 2,Fig2_mechanism.tif,Fig2_mechanism.pdf,4110x2042,17.4,600,double column,726
+Figure 3,Fig3_ablation.tif,Fig3_ablation.pdf,3309x2716,14.01,600,double column (natural size),312
+Figure 4,Fig4_frontier.tif,Fig4_frontier.pdf,4110x1691,17.4,600,double column,560
+Figure 5,Fig5_ad_blindness.tif,Fig5_ad_blindness.pdf,4110x1736,17.4,600,double column,672
+Figure 6,Fig6_ad_sensitivity.tif,Fig6_ad_sensitivity.pdf,4110x2069,17.4,600,double column,852
+Figure 7,Fig7_representation.tif,Fig7_representation.pdf,4110x2031,17.4,600,double column,450
+Figure 8,Fig8_threshold_sensitivity.tif,Fig8_threshold_sensitivity.pdf,4110x2049,17.4,600,double column,1033
+Figure 9,Fig9_method_ladder.tif,Fig9_method_ladder.pdf,4110x2474,17.4,600,double column,619
+Figure 10,Fig10_misalignment_vs_harm.tif,Fig10_misalignment_vs_harm.pdf,3788x2830,16.04,600,double column (natural size),360
+Figure 11,Fig11_decision_impact.tif,Fig11_decision_impact.pdf,4110x1604,17.4,600,double column,400
+Figure 12,Fig12_transfer_diagnostic.tif,Fig12_transfer_diagnostic.pdf,4110x2604,17.4,600,double column,494
+Figure 13,Fig13_shift_spectrum.tif,Fig13_shift_spectrum.pdf,4110x1421,17.4,600,double column,710
+Figure 14,Fig14_cliff_pair.tif,Fig14_cliff_pair.pdf,4110x1701,17.4,600,double column,490
+Figure 15,Fig15_classify.tif,Fig15_classify.pdf,4110x1492,17.4,600,double column,550

@@ -1,0 +1,13 @@
+# cliff_cp 运行依赖（Phase 0 预演：纯 CPU）
+# 部署路径因环境而异（建议项目内 .venv，详见 README）
+# 版本为 2026-09-22 实测通过的组合（python 3.10.12）
+numpy==2.2.6
+pandas==2.3.3
+scikit-learn==1.7.2
+scipy==1.15.3
+matplotlib==3.10.9
+rdkit==2026.3.6
+
+# Phase 1 及以后（需要 GPU，先不要装，避免占卡与依赖冲突）
+# torch          # CUDA 12.1 轮子
+# chemprop       # D-MPNN 基线

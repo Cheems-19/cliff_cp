@@ -1,0 +1,72 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite both the software/data record and the paper."
+title: "cliff-cp: coverage failure of conformal prediction on activity cliffs"
+abstract: >-
+  Analysis pipeline and per-molecule records accompanying the manuscript
+  "How the coverage guarantee of conformal prediction fails on activity cliffs:
+  mechanism, diagnosis, and a structural blind spot of applicability domains".
+  It quantifies, over 15 ChEMBL targets from the MoleculeACE benchmark,
+  the cliff-versus-non-cliff coverage gap, an exact coverage-transfer identity,
+  a label-free pre-deployment diagnostic for harmful partition signals,
+  and the structural blindness of applicability-domain filters.
+type: software
+license: MIT
+version: "1.0.0"
+date-released: "2026-09-23"
+
+# ── 待填：把下面每个 {} 换成真实信息 ────────────────────────────────
+authors:
+  - family-names: "{FamilyName1}"
+    given-names: "{GivenName1}"
+    orcid: "https://orcid.org/{0000-0000-0000-0000}"
+    affiliation: "{Institution, City, Postcode, Country}"
+  - family-names: "{FamilyName2}"
+    given-names: "{GivenName2}"
+    affiliation: "{Institution, City, Postcode, Country}"
+# 需要几位作者就继续加 - family-names: ... 条目
+
+contact:
+  - family-names: "{FamilyName1}"
+    given-names: "{GivenName1}"
+    email: "{corresponding@institution.edu}"
+
+repository-code: "https://github.com/{user}/cliff-cp"
+url: "https://github.com/{user}/cliff-cp"
+
+keywords:
+  - conformal prediction
+  - activity cliffs
+  - applicability domain
+  - uncertainty quantification
+  - QSAR
+  - cheminformatics
+  - coverage guarantee
+  - Mondrian conformal prediction
+
+references:
+  - type: article
+    title: "How the coverage guarantee of conformal prediction fails on activity cliffs: mechanism, diagnosis, and a structural blind spot of applicability domains"
+    authors:
+      - family-names: "{FamilyName1}"
+        given-names: "{GivenName1}"
+    year: 2026
+    journal: "{Journal name — to be filled after submission}"
+    doi: "{DOI — to be filled after acceptance}"
+
+# 依赖的第三方数据源（便于引用链完整）
+  - type: article
+    title: "Exposing the limitations of molecular machine learning with activity cliffs"
+    authors:
+      - family-names: van Tilborg
+        given-names: D.
+      - family-names: Alenicheva
+        given-names: A.
+      - family-names: Grisoni
+        given-names: F.
+    year: 2022
+    journal: "Journal of Chemical Information and Modeling"
+    volume: 62
+    issue: 23
+    start: 5938
+    end: 5951
+    doi: "10.1021/acs.jcim.2c01073"

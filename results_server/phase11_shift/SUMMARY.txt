@@ -1,0 +1,56 @@
+==============================================================================
+Phase 11 汇总：划分现实性 × 基线完整性
+==============================================================================
+rows: 1200 | datasets: 15 | splits: ['random', 'scaffold'] | seeds: 10 | methods: ['adaptive', 'cluster', 'cqr', 'global', 'knn_weighted', 'mondrian_rfstd', 'mondrian_wstd', 'weighted_shift']
+
+### 1. global 的悬崖覆盖差距（非悬崖 - 悬崖，pp）
+  [random  ] cliffA(数据集级)     合并=+9.5pp  方向一致=14/15  Wilcoxon p=6.10e-05
+  [random  ] cliffB(机制)       合并=+17.3pp  方向一致=15/15  Wilcoxon p=3.05e-05
+  [scaffold] cliffA(数据集级)     合并=+5.0pp  方向一致=13/15  Wilcoxon p=4.27e-04
+  [scaffold] cliffB(机制)       合并=+8.9pp  方向一致=12/15  Wilcoxon p=2.14e-03
+
+### 2. 条件化方法 vs global：Δ 悬崖覆盖（pp，正=改善悬崖组）
+  --- random ---
+    cliffA cqr              Δ= +2.73pp  (13/15)  p=5.37e-03
+    cliffA adaptive         Δ= +2.54pp  (12/15)  p=5.54e-02
+    cliffA cluster          Δ= +1.15pp  (12/15)  p=4.13e-02
+    cliffA mondrian_wstd    Δ= +0.00pp  (0/15)  p=nan
+    cliffA weighted_shift   Δ= -1.26pp  (4/15)  p=3.55e-02
+    cliffA knn_weighted     Δ= -1.31pp  (5/15)  p=8.33e-02
+    cliffA mondrian_rfstd   Δ= -3.96pp  (2/15)  p=4.27e-04
+    cliffB cqr              Δ= +8.23pp  (15/15)  p=6.10e-05
+    cliffB adaptive         Δ= +6.37pp  (13/15)  p=3.36e-03
+    cliffB cluster          Δ= +2.32pp  (9/15)  p=4.64e-02
+    cliffB mondrian_wstd    Δ= +0.00pp  (0/15)  p=nan
+    cliffB knn_weighted     Δ= -1.49pp  (5/15)  p=1.09e-01
+    cliffB weighted_shift   Δ= -1.59pp  (4/15)  p=5.97e-02
+    cliffB mondrian_rfstd   Δ= -4.38pp  (3/15)  p=1.03e-02
+  --- scaffold ---
+    cliffA cqr              Δ= +1.07pp  (10/15)  p=2.52e-01
+    cliffA cluster          Δ= +0.26pp  (10/15)  p=6.79e-01
+    cliffA mondrian_wstd    Δ= +0.00pp  (0/15)  p=nan
+    cliffA adaptive         Δ= -0.34pp  (9/15)  p=9.78e-01
+    cliffA knn_weighted     Δ= -1.67pp  (4/15)  p=4.79e-02
+    cliffA weighted_shift   Δ= -1.94pp  (3/15)  p=1.57e-02
+    cliffA mondrian_rfstd   Δ= -5.28pp  (1/15)  p=3.05e-04
+    cliffB cqr              Δ= +2.40pp  (10/15)  p=1.69e-01
+    cliffB cluster          Δ= +0.77pp  (8/15)  p=4.63e-01
+    cliffB mondrian_wstd    Δ= +0.00pp  (0/15)  p=nan
+    cliffB adaptive         Δ= -0.13pp  (7/15)  p=8.26e-01
+    cliffB knn_weighted     Δ= -1.10pp  (6/15)  p=4.63e-01
+    cliffB weighted_shift   Δ= -2.31pp  (2/15)  p=2.81e-02
+    cliffB mondrian_rfstd   Δ=-12.63pp  (1/15)  p=1.22e-04
+
+### 3. 错配量（信号对失效 AUC - 对悬崖 AUC）
+  --- random ---
+    d_nb      AUC_fail=0.621  AUC_cliffB=0.349  AUC_cliffA=0.336  M_B=+0.272  M_A=+0.285
+    d_nn_sim  AUC_fail=0.614  AUC_cliffB=0.110  AUC_cliffA=0.178  M_B=+0.504  M_A=+0.435
+    d_wstd    AUC_fail=0.582  AUC_cliffB=0.685  AUC_cliffA=0.675  M_B=-0.103  M_A=-0.093
+    rf_std    AUC_fail=0.722  AUC_cliffB=0.532  AUC_cliffA=0.490  M_B=+0.190  M_A=+0.232
+  --- scaffold ---
+    d_nb      AUC_fail=0.607  AUC_cliffB=0.294  AUC_cliffA=0.337  M_B=+0.313  M_A=+0.270
+    d_nn_sim  AUC_fail=0.605  AUC_cliffB=0.062  AUC_cliffA=0.246  M_B=+0.543  M_A=+0.359
+    d_wstd    AUC_fail=0.560  AUC_cliffB=0.670  AUC_cliffA=0.657  M_B=-0.110  M_A=-0.097
+    rf_std    AUC_fail=0.683  AUC_cliffB=0.427  AUC_cliffA=0.465  M_B=+0.256  M_A=+0.219
+
+==============================================================================

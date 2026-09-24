@@ -1,0 +1,16 @@
+=== B6 分类外推（α=0.10, 标签悬崖 = 训练邻居标签冲突）===
+
+── BACE (n_test/seed=302, 悬崖/seed≈27) ──
+  global               cov_all=0.913 cliff=0.644 non=0.935 gap=+29.1pp (5/5, p=0.0625) size=1.26
+  mondrian_predclass   cov_all=0.913 cliff=0.644 non=0.935 gap=+29.1pp (5/5, p=0.0625) size=1.26
+  mondrian_nnsim       cov_all=0.921 cliff=0.644 non=0.943 gap=+29.9pp (5/5, p=0.0625) size=1.27
+
+── BBBP (n_test/seed=395, 悬崖/seed≈4) ──
+  global               cov_all=0.905 cliff=0.467 non=0.909 gap=+44.2pp (3/5, p=0.312) size=1.04
+  mondrian_predclass   cov_all=0.905 cliff=0.467 non=0.909 gap=+44.2pp (3/5, p=0.312) size=1.04
+  mondrian_nnsim       cov_all=0.906 cliff=0.467 non=0.910 gap=+44.3pp (3/5, p=0.312) size=1.05
+
+── Tox21_NR-AR (n_test/seed=1451, 悬崖/seed≈10) ──
+  global               cov_all=0.901 cliff=0.029 non=0.906 gap=+87.7pp (5/5, p=0.0625) size=0.92
+  mondrian_predclass   cov_all=0.901 cliff=0.029 non=0.906 gap=+87.7pp (5/5, p=0.0625) size=0.92
+  mondrian_nnsim       cov_all=0.903 cliff=0.054 non=0.907 gap=+85.4pp (5/5, p=0.0625) size=0.92

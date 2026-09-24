@@ -1,0 +1,6 @@
+=== B2 net_mag 统计强度 ===
+n_units=16  Spearman=+0.865  Pearson=+0.804
+permutation p=2e-05 (B=200000)
+bootstrap 95% CI=[+0.638,+0.943]
+leave-one-out range=[+0.843,+0.889]
+signal-level n=8 Spearman=+0.929 perm_p=0.00268

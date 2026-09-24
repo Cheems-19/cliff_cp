@@ -1,0 +1,64 @@
+### METHODS.csv columns: ['dataset', 'split', 'seed', 'method', 'n_test', 'n_cliffB', 'n_cliffA', 'cov_all', 'cov_cliffB', 'cov_noncliffB', 'gapB_pp', 'cov_cliffA', 'cov_noncliffA', 'gapA_pp', 'width_all', 'width_cliffA', 'width_noncliffA']
+rows: 1200 | datasets: 15 | splits: ['random', 'scaffold'] | methods: ['adaptive', 'cluster', 'cqr', 'global', 'knn_weighted', 'mondrian_rfstd', 'mondrian_wstd', 'weighted_shift']
+
+### 方法 vs global —— cliffA 覆盖率（α=0.10）
+  --- random ---
+    cqr              Δ= +2.73pp  (13/15)  p=5.37e-03
+    adaptive         Δ= +2.54pp  (12/15)  p=5.54e-02
+    cluster          Δ= +1.15pp  (12/15)  p=4.13e-02
+    mondrian_wstd    Δ= +0.00pp  ( 0/15)  p=nan
+    weighted_shift   Δ= -1.26pp  ( 4/15)  p=3.55e-02
+    knn_weighted     Δ= -1.31pp  ( 5/15)  p=8.33e-02
+    mondrian_rfstd   Δ= -3.96pp  ( 2/15)  p=4.27e-04
+  --- scaffold ---
+    cqr              Δ= +1.07pp  (10/15)  p=2.52e-01
+    cluster          Δ= +0.26pp  (10/15)  p=6.79e-01
+    mondrian_wstd    Δ= +0.00pp  ( 0/15)  p=nan
+    adaptive         Δ= -0.34pp  ( 9/15)  p=9.78e-01
+    knn_weighted     Δ= -1.67pp  ( 4/15)  p=4.79e-02
+    weighted_shift   Δ= -1.94pp  ( 3/15)  p=1.57e-02
+    mondrian_rfstd   Δ= -5.28pp  ( 1/15)  p=3.05e-04
+
+### 方法 vs global —— cliffB 覆盖率（α=0.10）
+  --- random ---
+    cqr              Δ= +8.23pp  (15/15)  p=6.10e-05
+    adaptive         Δ= +6.37pp  (13/15)  p=3.36e-03
+    cluster          Δ= +2.32pp  ( 9/15)  p=4.64e-02
+    mondrian_wstd    Δ= +0.00pp  ( 0/15)  p=nan
+    knn_weighted     Δ= -1.49pp  ( 5/15)  p=1.09e-01
+    weighted_shift   Δ= -1.59pp  ( 4/15)  p=5.97e-02
+    mondrian_rfstd   Δ= -4.38pp  ( 3/15)  p=1.03e-02
+  --- scaffold ---
+    cqr              Δ= +2.40pp  (10/15)  p=1.69e-01
+    cluster          Δ= +0.77pp  ( 9/15)  p=4.33e-01
+    mondrian_wstd    Δ= +0.00pp  ( 0/15)  p=nan
+    adaptive         Δ= -0.13pp  ( 7/15)  p=8.26e-01
+    knn_weighted     Δ= -1.10pp  ( 6/15)  p=4.63e-01
+    weighted_shift   Δ= -2.31pp  ( 2/15)  p=2.81e-02
+    mondrian_rfstd   Δ=-12.63pp  ( 1/15)  p=1.22e-04
+
+### LADDER.csv columns: ['dataset', 'seed', 'k', 'auc_fail', 'auc_cliffB', 'misalign', 'd_cov_cliffB_pp', 'd_cov_cliffA_pp', 'cov_cliffB', 'cov_cliffA', 'n_cliffB', 'n_cliffA']
+rows: 525 | datasets: 15 | seeds: 5 | k values: [np.int64(2), np.int64(5), np.int64(10), np.int64(25), np.int64(50), np.int64(100), np.int64(200)]
+
+### k 阶梯（跨 15 数据集 × 5 种子均值）
+resolved cols: auc_fail auc_cliffB misalign d_cov_cliffB_pp d_cov_cliffA_pp
+  k=  2  AUC_fail=0.592  AUC_cliffB=0.493  M=+0.099  dCovB=-0.57pp  dCovA=-0.37pp  harm<0=24/15
+  k=  5  AUC_fail=0.647  AUC_cliffB=0.539  M=+0.108  dCovB=-0.87pp  dCovA=-0.45pp  harm<0=27/15
+  k= 10  AUC_fail=0.678  AUC_cliffB=0.545  M=+0.132  dCovB=-1.38pp  dCovA=-2.39pp  harm<0=28/15
+  k= 25  AUC_fail=0.702  AUC_cliffB=0.524  M=+0.178  dCovB=-3.34pp  dCovA=-3.03pp  harm<0=38/15
+  k= 50  AUC_fail=0.712  AUC_cliffB=0.529  M=+0.182  dCovB=-4.68pp  dCovA=-3.86pp  harm<0=41/15
+  k=100  AUC_fail=0.719  AUC_cliffB=0.533  M=+0.186  dCovB=-3.59pp  dCovA=-3.91pp  harm<0=39/15
+  k=200  AUC_fail=0.722  AUC_cliffB=0.532  M=+0.190  dCovB=-4.38pp  dCovA=-3.96pp  harm<0=39/15
+
+### 单调性（逐行，n=525）
+  Spearman(AUC_fail, k)   = +0.618  p=1.11e-56
+  Spearman(|M|, k)        = +0.381  p=1.30e-19
+  Spearman(|dCovB|, k)    = +0.141  p=1.23e-03
+  Spearman(AUC_fail_mean, k) = +1.000
+  Spearman(|dCovB_mean|, k)  = +0.893
+
+### 剂量效应：dCovB(k=100,200) − dCovB(k=2,5)
+  均值差 = -3.26 pp  (n=75)  Wilcoxon p=3.17e-04  方向为负 45/75
+
+### k=200（全部树，信号最充分）
+  均值 = -4.38 pp  (n=15)  Wilcoxon p=1.03e-02  方向为负 12/15
